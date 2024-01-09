@@ -1,23 +1,16 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "bdd_user";
-
-// Créez une connexion à la base de données
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+$bdd = new PDO("mysql:host=127.0.0.1;dbname=blog;charset=utf8", "root", "root");
+$articles = $bdd->query('SELECT * FROM article ORDER BY datation DESC');
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <title>Sweaters</title>
-
-
+</head>
 
     <header>
         <!-- Navbar -->
@@ -50,28 +43,21 @@ $conn = new mysqli($servername, $username, $password, $dbname);
         </nav>
     </header>
 
-    <center style="display: flex;">
+    <center class="d-flex align-content-around flex-wrap" style="display: flex; margin: 2%;">
+        <?php while($a = $articles->fetch()) { ?>
         <div class="card" style="width: 18rem; margin: 1%;">
         <img src="css/img/Logo.png" class="card-img-top">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="arcticle1.php" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title"><?= $a['titre'] ?></h5>
+            <a href="article.php?id=<?= $a['id'] ?>" class="btn btn-primary">Watch Threads</a>
             <a onclick="cancelconf()" class="btn btn-danger" style="margin: 1%;">delete</a>
         </div>
         </div>
-        <div class="card" style="width: 18rem; margin: 1%;">
-        <img src="css/img/Logo.png" class="card-img-top">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="arcticle2.php" class="btn btn-primary">Go somewhere</a>
-            <a onclick="cancelconf()" class="btn btn-danger" style="margin: 1%;">delete</a>
-        </div>
-        </div>
+        <?php } ?>
     </center>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html> 
 <!-- https://github.com/AriLeGrand/TennisClubTorcy/blob/main/index.html -> source mon github perso -->
+<!-- https://www.primfx.com/systeme-articles-php-1-redaction-affichage-467/ -> source externe permetan de simplifié la vie -->
